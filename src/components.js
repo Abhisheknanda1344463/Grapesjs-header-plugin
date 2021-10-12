@@ -25,8 +25,38 @@ export default (editor, config = {}) => {
               name: "tagName",
               changeProp: 1,
             },
+            {
+              changeProp: 1,
+              type: 'select',
+              label: 'Alignment',
+              name: 'text_align',
+              options: [
+                {value: 'text-start', name: 'Left'},
+                {value: 'text-center', name: 'Center'},
+                {value: 'text-end', name: 'Right'},
+              ]
+            },
+            {
+              changeProp: 1,
+              type: 'number',
+              label: 'Padding Bottom',
+              name: 'padding-bottom',
+            },
           ],
         }),
+        init(){
+           this.on("change:text_align", this.updatealignment);
+           this.on("change:padding-bottom", this.updatestyle);
+        },
+        updatealignment(){
+          const alignment = this.get('text_align');
+          this.removeClass(['text-start', 'text-center', 'text-end']);
+          this.addClass(alignment);
+        },
+        updatestyle(){
+          const padding_bottom = this.get('padding-bottom');
+          this.addStyle({"padding-bottom": padding_bottom });
+        },
       },
       {
         isComponent(el) {
